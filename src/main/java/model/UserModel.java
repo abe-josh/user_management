@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 public class UserModel {
 	private long userId;
-	private String userName;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private long mobileNumber;
 	private LocalDateTime dateOfBirth;
@@ -20,11 +21,18 @@ public class UserModel {
 		this.userId = userId;
 	}
 	
-	public String getUserName() {
-		return userName;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	public String getEmail() {
@@ -75,11 +83,12 @@ public class UserModel {
 	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", email=" + email + ", mobileNumber="
-				+ mobileNumber + ", dateOfBirth=" + dateOfBirth + ", password=" + password + ", salt=" + salt
-				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+		return "UserModel [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
+				+ email + ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth + ", password=" + password
+				+ ", salt=" + salt + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
 	}
+	
+	
 }

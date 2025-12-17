@@ -25,14 +25,14 @@ public class SignupServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("SignupServlet - doGet");
+		System.out.println("SignupServlet - doGet()");
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/views/signup.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("SignupServlet - doPost");
+		System.out.println("SignupServlet - doPost()");
 		
 		/*
 		 * Enumeration<String> paramNames = req.getParameterNames();
