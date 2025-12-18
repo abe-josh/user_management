@@ -4,11 +4,14 @@ import java.util.List;
 
 import dto.UserDTO;
 import model.UserModel;
+import utils.PasswordUtil;
 
 public class UserServiceImp implements UserService {
 	@Override
 	public UserDTO addUser(UserModel user) {
 		System.out.println("UserServiceImp - addUser()");
+		
+		user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
 		
 		System.out.println(user.toString());
 		

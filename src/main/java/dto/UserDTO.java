@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 public class UserDTO {
 	private long userId;
-	private String userName;
+	private String firstName;
+	private String lastName;
 	private String email;
 	private long mobileNumber;
 	private LocalDateTime dateOfBirth;
@@ -16,11 +17,18 @@ public class UserDTO {
 		this.userId = userId;
 	}
 	
-	public String getUserName() {
-		return userName;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	public String getEmail() {
@@ -43,11 +51,10 @@ public class UserDTO {
 	public void setDateOfBirth(LocalDateTime dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
 	@Override
 	public String toString() {
-		return "UserDTO [userId=" + userId + ", userName=" + userName + ", email=" + email + ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth + "]";
+		return "UserDTO [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth + "]";
 	}
-	
 	
 }

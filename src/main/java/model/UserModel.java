@@ -10,7 +10,6 @@ public class UserModel {
 	private long mobileNumber;
 	private LocalDateTime dateOfBirth;
 	private String password;
-	private String salt;
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
 	
@@ -63,13 +62,6 @@ public class UserModel {
 		this.password = password;
 	}
 	
-	public String getSalt() {
-		return salt;
-	}
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
-	
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
@@ -87,7 +79,7 @@ public class UserModel {
 	public String toString() {
 		return "UserModel [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
 				+ email + ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth + ", password=" + password
-				+ ", salt=" + salt + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+				 + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
 	}
 	
 	
