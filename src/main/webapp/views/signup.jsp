@@ -19,6 +19,11 @@
 			
 			<br>
 			
+			<label for="username">User name</label>
+			<input type="text" name="username" placeholder="User name" required/>
+			
+			<br>
+			
 			<label for="email">Email</label>
 			<input type="email" name="email" placeholder="email" required/>
 			

@@ -2,6 +2,8 @@ package servlet;
 
 import java.io.IOException;
 
+import controller.MainController;
+import controller.UserController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,9 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class MainServlet extends HttpServlet {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -20,7 +19,14 @@ public class MainServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
+		String path = request.getServletPath();
+		MainController mainController = MainController.getInstance();
+		
+		switch(path) {
+			case "/home":
+				mainController.initialize(request, response);
+				break;
+		}
 	}
 	
 	@Override
@@ -32,5 +38,14 @@ public class MainServlet extends HttpServlet {
 		System.out.println("Hi " + username + "!");
 		System.out.println("Your password is : " + password);
 		
+		UserController userCtrl = UserController.getInstance();
+		
+		String path = request.getServletPath();
+				
+		switch(path) {
+			case "/signin":
+				userCtrl.signin(request, response);
+			break;
+		}
 	}
 }

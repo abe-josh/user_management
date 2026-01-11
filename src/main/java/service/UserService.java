@@ -7,10 +7,11 @@ import model.UserModel;
 
 public interface UserService {
 	
-	public UserDTO addUser(UserModel user);
-	public UserDTO updateUser(UserDTO userDto);
-	public UserDTO getUser(String username);
+	public boolean addUser(UserModel user);
+	public UserModel updateUser(UserModel user);
+	public UserModel getUser(String username);
 	public void deleteUser(String username);
 	public List<UserDTO> getUsers();
+	public boolean validateUser(String username, String password);
 	
 }

@@ -21,6 +21,10 @@
 		<servlet-name>mainServlet</servlet-name>
 		<url-pattern>/signin</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>mainServlet</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
 	
 	
 	<!-- Signup Servlet -->

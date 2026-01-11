@@ -1,14 +1,21 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class UserModel {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class UserModel implements Model {
 	private long userId;
 	private String firstName;
 	private String lastName;
+	private String userName;
 	private String email;
 	private long mobileNumber;
-	private LocalDateTime dateOfBirth;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate dateOfBirth;
+	
 	private String password;
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
@@ -34,6 +41,13 @@ public class UserModel {
 		this.lastName = lastName;
 	}
 	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -48,10 +62,10 @@ public class UserModel {
 		this.mobileNumber = mobileNumber;
 	}
 	
-	public LocalDateTime getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(LocalDateTime dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
@@ -77,10 +91,8 @@ public class UserModel {
 	}
 	@Override
 	public String toString() {
-		return "UserModel [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
-				+ email + ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth + ", password=" + password
-				 + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+		return "UserModel [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
+				+ userName + ", email=" + email + ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth
+				+ ", password=" + password + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
 	}
-	
-	
 }

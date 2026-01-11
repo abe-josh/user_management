@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -27,6 +29,30 @@ public class UserController {
 
 		return userController;
 	}
+	
+	public void signin(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("UserController - signin()");
+		
+		System.out.println("getContextPath() : " + request.getContextPath());
+		
+		Enumeration<String> paramNames = request.getParameterNames();
+		  
+		while(paramNames.hasMoreElements()) { 
+			String parameterName = paramNames.nextElement(); 
+			System.out.println(parameterName + " -  " + request.getParameter(parameterName)); 
+		}
+		
+		if(userSrvc.validateUser(request.getParameter("username"), request.getParameter("password"))) {
+			System.out.println("User validated");
+			try {
+				response.sendRedirect("/UserManagement/home");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 	public void signup(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("UserController - signup()");
@@ -36,18 +62,28 @@ public class UserController {
 		while(paramNames.hasMoreElements()) { 
 			String parameterName = paramNames.nextElement(); 
 			System.out.println(parameterName + " -  " + request.getParameter(parameterName)); 
-			}
+		}
  
 		UserModel user = new UserModel();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		
 		user.setFirstName(request.getParameter("firstname"));
 		user.setLastName(request.getParameter("lastname"));
+		user.setUserName(request.getParameter("username"));
 		user.setEmail(request.getParameter("email"));
 		user.setMobileNumber(Long.parseLong(request.getParameter("mobileNumber")));
-		user.setDateOfBirth(LocalDateTime.parse(request.getParameter("birthdate").concat(" 00:00:00"), dtf) );
+		user.setDateOfBirth(LocalDate.parse(request.getParameter("birthdate"), dtf));
 		user.setPassword(request.getParameter("password"));
 		
-		userSrvc.addUser(user);
+		if(userSrvc.addUser(user)) {
+			
+			try {
+				response.sendRedirect("/UserManagement");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }

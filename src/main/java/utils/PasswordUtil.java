@@ -14,4 +14,8 @@ public class PasswordUtil {
 		// hash the password with the salt
 		return BCrypt.hashpw(password, salt);
 	}
+	
+	public static boolean verifyPassword(String plainPassword, String hashedPassword) {
+		return BCrypt.checkpw(plainPassword, hashedPassword);
+	}
 }

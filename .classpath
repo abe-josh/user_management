@@ -14,5 +14,9 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jbcrypt-0.4.jar"/>
+	<classpathentry kind="lib" path="D:/jackson_library/jackson-annotations-2.20.jar"/>
+	<classpathentry kind="lib" path="D:/jackson_library/jackson-core-2.20.0.jar"/>
+	<classpathentry kind="lib" path="D:/jackson_library/jackson-databind-2.20.0.jar"/>
+	<classpathentry kind="lib" path="D:/jackson_library/jackson-datatype-jsr310-2.20.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
