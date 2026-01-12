@@ -89,6 +89,7 @@ public class UserModel implements Model {
 	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+	
 	@Override
 	public String toString() {
 		return "UserModel [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="

@@ -18,4 +18,5 @@ public class PasswordUtil {
 	public static boolean verifyPassword(String plainPassword, String hashedPassword) {
 		return BCrypt.checkpw(plainPassword, hashedPassword);
 	}
+	
 }
