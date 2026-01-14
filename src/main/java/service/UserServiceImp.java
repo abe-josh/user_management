@@ -4,6 +4,7 @@ import java.util.List;
 
 import dto.UserDTO;
 import model.UserModel;
+import utils.IDGenerator;
 import utils.PasswordUtil;
 import utils.ReadFile;
 import utils.WriteToFile;
@@ -17,7 +18,17 @@ public class UserServiceImp implements UserService {
 		
 		System.out.println(user.toString());
 		
-		return WriteToFile.writeUserData(user);
+		long userId = IDGenerator.generateUserId();
+		
+		if(userId != 0)
+		{
+			user.setUserId(userId);
+			return WriteToFile.writeUserData(user);
+		}
+		
+		return false;
+		
+		//return WriteToFile.writeUserData(user);
 	}
 	
 	@Override

@@ -18,13 +18,13 @@ Password (hashed, never stored in plain text)
 
 Account status:
 
-ACTIVE
+ACTIVE - approved registration by the admin
 
-DISABLED
+DISABLED - disabled by the admin
 
-LOCKED
+LOCKED - after reaching max number of failed attempts
 
-PENDING_VERIFICATION
+PENDING_VERIFICATION - upon login
 
 Recommended
 
@@ -52,7 +52,7 @@ Recommended
 
 Account lock after N failed attempts
 
-Password expiration policy (optional)
+Password expiration policy (optional) - every 120 days
 
 1.3 Authorization (Roles & Permissions)
 

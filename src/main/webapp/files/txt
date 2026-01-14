@@ -150,11 +150,11 @@ Session references User, but User does not depend on Session.
 This avoids circular dependency and matches industry design.
 
 8. Final Industry Answer
-Question	Industry Answer
+Question								Industry Answer
 Are sessions part of user management?	Yes, conceptually
-Are they core user data?	No
-Should User depend on Session?	Never
-Should Session reference User?	Always
+Are they core user data?				No
+Should User depend on Session?			Never
+Should Session reference User?			Always
 One-line summary (industry phrasing)
 
 Sessions are authentication state, not identity.
