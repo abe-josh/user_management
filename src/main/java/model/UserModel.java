@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import utils.UserStatus;
+
 public class UserModel implements Model {
 	private long userId;
 	private String firstName;
@@ -16,6 +18,7 @@ public class UserModel implements Model {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate dateOfBirth;
 	
+	private UserStatus status;
 	private String password;
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
@@ -69,6 +72,13 @@ public class UserModel implements Model {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
+	public UserStatus getStatus() {
+		return status;
+	}
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -94,6 +104,7 @@ public class UserModel implements Model {
 	public String toString() {
 		return "UserModel [userId=" + userId + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
 				+ userName + ", email=" + email + ", mobileNumber=" + mobileNumber + ", dateOfBirth=" + dateOfBirth
-				+ ", password=" + password + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+				+ ", status=" + status + ", password=" + password + ", createdDate=" + createdDate + ", updatedDate="
+				+ updatedDate + "]";
 	}
 }

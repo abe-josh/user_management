@@ -2,11 +2,14 @@ package service;
 
 import java.util.List;
 
+import org.apache.tomcat.websocket.AuthenticationException;
+
 import dto.UserDTO;
 import model.UserModel;
 import utils.IDGenerator;
 import utils.PasswordUtil;
 import utils.ReadFile;
+import utils.UserStatus;
 import utils.WriteToFile;
 
 public class UserServiceImp implements UserService {
@@ -20,6 +23,8 @@ public class UserServiceImp implements UserService {
 		
 		long userId = IDGenerator.generateUserId();
 		
+//		System.out.println("user id generated : " + userId);
+		
 		if(userId != 0)
 		{
 			user.setUserId(userId);
@@ -28,7 +33,7 @@ public class UserServiceImp implements UserService {
 		
 		return false;
 		
-		//return WriteToFile.writeUserData(user);
+//		return WriteToFile.writeUserData(user);
 	}
 	
 	@Override
@@ -36,16 +41,28 @@ public class UserServiceImp implements UserService {
 		System.out.println("UserServiceImp - validateUser()");
 
 		UserModel user = getUser(username);
-		boolean isValidated = PasswordUtil.verifyPassword(password, user.getPassword());
+//		boolean isValidated = PasswordUtil.verifyPassword(password, user.getPassword());		
+		if(user == null) {
+			System.err.println("Invalid username or password!");
+			return false;
+		}
 		
 		System.out.println("User inside UserServiceImp.validateUser() : " + user.toString());
 		
-		if(user != null) {
-			if(isValidated) {
-				System.out.println("user validated - true");
+		if(user.getStatus() == UserStatus.ACTIVE) {
+			System.out.println("User account is active.");
+			if(PasswordUtil.verifyPassword(password, user.getPassword())) {
+				System.out.println("Password validated.\n");
 				return true;
 			}
 		}
+		
+//		if(user != null) {
+//			if(isValidated) {
+//				System.out.println("user validated - true");
+//				return true;
+//			}
+//		}
 		
 		return false;
 	}
