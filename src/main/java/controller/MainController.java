@@ -26,6 +26,7 @@ public class MainController {
 		System.out.println("MainController - initialize()");
 		
 		try {
+			System.out.println("session id : " + request.getSession());
 			request.getRequestDispatcher("/views/homepage.jsp").forward(request, response);
 		} catch (Exception e) {
 			System.err.println("Failed to  load homepage.jsp!\n" + e.getMessage());

@@ -1,0 +1,127 @@
+Here’s a clear, end-to-end flow of user login including session creation, starting from the user action to an authenticated session. I’ll describe the typical web application flow, then briefly note token-based (JWT) differences.
+
+1. User Initiates Login
+
+User opens the login page.
+
+User enters credentials (e.g., username/email + password).
+
+Browser sends an HTTPS POST request to the server:
+
+POST /login
+Body: { username, password }
+
+2. Server Receives Login Request
+
+Server validates the request format.
+
+Server retrieves the user record from the database using the username/email.
+
+Server hashes the provided password and compares it with the stored hash.
+
+Common algorithms: bcrypt, argon2, scrypt
+
+If credentials are invalid → return 401 Unauthorized.
+
+3. Authentication Success
+
+Once credentials are verified:
+
+Server considers the user authenticated.
+
+Server creates a session.
+
+4. Session Creation (Server-Side)
+
+Server generates a unique session ID (random, unguessable).
+
+session_id = "abc123xyz..."
+
+
+Server stores session data in a session store:
+
+Database
+
+Redis / Memcached
+
+In-memory (not recommended for scaling)
+
+Example session data:
+
+session_id → {
+    user_id: 42,
+    role: "admin",
+    created_at: timestamp,
+    expires_at: timestamp
+}
+
+5. Session ID Sent to Client
+
+Server sends the session ID to the browser via a Set-Cookie header:
+
+Set-Cookie: session_id=abc123xyz;
+            HttpOnly;
+            Secure;
+            SameSite=Lax;
+            Path=/
+
+
+Browser stores the cookie automatically.
+
+6. Authenticated Requests (Session Usage)
+
+For every subsequent request:
+
+Browser automatically sends the cookie:
+
+Cookie: session_id=abc123xyz
+
+
+Server:
+
+Reads session_id
+
+Looks it up in the session store
+
+Retrieves associated user data
+
+If session is valid → request proceeds.
+
+If session is missing/expired → redirect to login or return 401.
+
+7. Authorization Check
+
+Server checks user permissions/roles stored in the session.
+
+Allows or denies access to requested resources.
+
+8. Logout Flow
+
+User clicks logout.
+
+Browser sends request:
+
+POST /logout
+
+
+Server:
+
+Deletes the session from the session store
+
+Sends a cookie deletion response:
+
+Set-Cookie: session_id=; Max-Age=0;
+
+
+Session is terminated.
+
+Diagram (Simplified)
+User → Login Form → Server
+                     ↓
+            Validate Credentials
+                     ↓
+              Create Session
+                     ↓
+           Set-Cookie(session_id)
+                     ↓
+        Authenticated Requests

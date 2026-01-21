@@ -42,15 +42,21 @@ public class UserController {
 			System.out.println(parameterName + " -  " + request.getParameter(parameterName)); 
 		}
 		
-		if(userSrvc.validateUser(request.getParameter("username"), request.getParameter("password"))) {
-			System.out.println("User validated");
-			try {
+		try {
+			if(userSrvc.validateUser(request.getParameter("username"), request.getParameter("password"))) {
+				System.out.println("User validated");
+				System.out.println("session id : " + request.getSession());
 				response.sendRedirect("/UserManagement/home");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			}
+			else {
+				response.sendRedirect("/UserManagement");
 			}
 		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 

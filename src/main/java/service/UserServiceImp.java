@@ -17,7 +17,12 @@ public class UserServiceImp implements UserService {
 	public boolean addUser(UserModel user) {
 		System.out.println("UserServiceImp - addUser()");
 		
+		if(getUser(user.getUserName()) != null) {
+			return false;
+		}
+		
 		user.setPassword(PasswordUtil.hashPassword(user.getPassword()));
+		user.setStatus(UserStatus.PENDING_VERIFICATION);
 		
 		System.out.println(user.toString());
 		
@@ -30,6 +35,8 @@ public class UserServiceImp implements UserService {
 			user.setUserId(userId);
 			return WriteToFile.writeUserData(user);
 		}
+		
+//		System.out.println("inside addUser() : " + user.toString());
 		
 		return false;
 		
@@ -55,7 +62,13 @@ public class UserServiceImp implements UserService {
 				System.out.println("Password validated.\n");
 				return true;
 			}
+			else {
+				System.out.println("Invalid password.");
+				return false;
+			}
 		}
+		
+		System.out.println("User account is not yet ACTIVATED.");
 		
 //		if(user != null) {
 //			if(isValidated) {
