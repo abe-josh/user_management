@@ -79,6 +79,36 @@ public class UserServiceImp implements UserService {
 		
 		return false;
 	}
+	
+	@Override
+	public long validateUser1(String username, String password) {
+		System.out.println("UserServiceImp - validateUser1()");
+
+		UserModel user = getUser(username);
+//		boolean isValidated = PasswordUtil.verifyPassword(password, user.getPassword());		
+		if(user == null) {
+			System.err.println("Invalid username or password!");
+			return 0;
+		}
+		
+		System.out.println("User inside UserServiceImp.validateUser() : " + user.toString());
+		
+		if(user.getStatus() == UserStatus.ACTIVE) {
+			System.out.println("User account is active.");
+			if(PasswordUtil.verifyPassword(password, user.getPassword())) {
+				System.out.println("Password validated.\n");
+				return user.getUserId();
+			}
+			else {
+				System.out.println("Invalid password.");
+				return 0;
+			}
+		}
+		
+		System.out.println("User account is not yet ACTIVATED.");
+		
+		return 0;
+	}
 
 	@Override
 	public UserModel updateUser(UserModel user) {

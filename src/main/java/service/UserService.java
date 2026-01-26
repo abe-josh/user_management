@@ -13,5 +13,5 @@ public interface UserService {
 	public void deleteUser(String username);
 	public List<UserDTO> getUsers();
 	public boolean validateUser(String username, String password);
-	
+	public long validateUser1(String username, String password);
 }

@@ -2,14 +2,22 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Session {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class Session implements Model{
 	
 	private String sessionId;
 	private long userId;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime loginTime;
 	private boolean isActive;
 	private boolean rememberMe;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime lastActivity;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime expiresAt;
 	
 	public String getSessionId() {
@@ -60,6 +68,7 @@ public class Session {
 	public void setExpiresAt(LocalDateTime expiresAt) {
 		this.expiresAt = expiresAt;
 	}
+	
 	@Override
 	public String toString() {
 		return "Session [sessionId=" + sessionId + ", userId=" + userId + ", loginTime=" + loginTime + ", isActive="

@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.UserModel;
+import service.SessionService;
 import service.UserService;
 import service.UserServiceImp;
 
@@ -36,16 +38,39 @@ public class UserController {
 		System.out.println("getContextPath() : " + request.getContextPath());
 		
 		Enumeration<String> paramNames = request.getParameterNames();
+		SessionService sessSrvc = new SessionService();
 		  
 		while(paramNames.hasMoreElements()) { 
 			String parameterName = paramNames.nextElement(); 
 			System.out.println(parameterName + " -  " + request.getParameter(parameterName)); 
 		}
 		
+//		try {
+//			if(userSrvc.validateUser(request.getParameter("username"), request.getParameter("password"))) {
+//				System.out.println("User validated");
+//				System.out.println("session id : " + request.getSession().toString());
+//				response.sendRedirect("/UserManagement/home");
+//			}
+//			else {
+//				response.sendRedirect("/UserManagement");
+//			}
+//		}
+//		catch(IOException e) {
+//			e.printStackTrace();
+//		}
+		long userid = userSrvc.validateUser1(request.getParameter("username"), request.getParameter("password"));
+		
 		try {
-			if(userSrvc.validateUser(request.getParameter("username"), request.getParameter("password"))) {
+			if(userid > 0) {
 				System.out.println("User validated");
-				System.out.println("session id : " + request.getSession());
+				
+				String sessionId = sessSrvc.createSession(userid);
+				
+				if(sessionId != null) {
+					System.out.println("session id is not null");
+					addSessionCookie(response, sessionId);
+				}
+				//System.out.println("session id : " + request.getSession().toString());
 				response.sendRedirect("/UserManagement/home");
 			}
 			else {
@@ -55,9 +80,6 @@ public class UserController {
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 
 	public void signup(HttpServletRequest request, HttpServletResponse response) {
@@ -91,5 +113,28 @@ public class UserController {
 			}
 			
 		}
+	}
+	
+	private String getCookie(HttpServletRequest request, String name) {
+		if(request.getCookies() == null) {
+			return null;
+		}
+		
+		for(Cookie cookie : request.getCookies()) {
+			System.out.println("Cookie : "  + cookie);
+			if(cookie.getName().equals(name)) {
+				return cookie.getValue();
+			}
+		}
+		
+		return null;
+	}
+	
+	private void addSessionCookie(HttpServletResponse response, String sessionId) {
+		Cookie cookie = new Cookie("UserSessionId", sessionId);
+		cookie.setHttpOnly(true);
+		cookie.setSecure(true);
+		cookie.setPath("/");
+		response.addCookie(cookie);
 	}
 }

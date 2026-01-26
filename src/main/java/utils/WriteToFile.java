@@ -8,11 +8,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
+import model.Session;
 import model.UserModel;
 
 public class WriteToFile {
 	
 	private static final Path userFile = Paths.get("D:\\joshua\\web_app_java\\UserManagement\\src\\main\\webapp\\files\\user_data.json");
+	private static final Path sessionFile = Paths.get("D:\\joshua\\web_app_java\\UserManagement\\src\\main\\webapp\\files\\session_data.json");
 	
 	public static boolean writeUserData(UserModel user) {
 		System.out.println("WriteToFile writeUserData()"); 
@@ -43,6 +45,33 @@ public class WriteToFile {
 			
 		} catch (IOException e) {
 			System.err.println("Failed to write user data to file.");
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public static boolean writeSessionData(Session userSession) {
+		System.out.println("WriteTofile - writeSessionData()");
+		String sessionJson = JsonMapper.toJson(userSession);
+		
+		if(sessionJson == null) {
+			System.out.println("Session object is null");
+			return false;
+		}
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(sessionFile.toString(), true));
+			
+			writer.write(sessionJson + ",\n");
+			writer.close();
+			
+			System.out.println("Session data successfully saved to file.");
+			
+			return true;
+		}
+		catch(IOException e) {
+			System.err.println("Failed to write session data to file");
 			e.printStackTrace();
 		}
 		
