@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.UserModel;
 import service.SessionService;
 import service.UserService;
@@ -70,6 +71,12 @@ public class UserController {
 					System.out.println("session id is not null");
 					addSessionCookie(response, sessionId);
 				}
+				
+				// assigned a "session" object associated with the request, and create if there is none (true)
+				// using servlet built in session object
+//				HttpSession session = request.getSession(true);
+//				session.setAttribute("userId", userid);
+				
 				//System.out.println("session id : " + request.getSession().toString());
 				response.sendRedirect("/UserManagement/home");
 			}

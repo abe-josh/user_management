@@ -1,0 +1,209 @@
+High level Session handling
+1. Who is the User? (Authentication)
+2. How do we remember them across requests? (Session persistence)
+3. How long do we trust this session?  (Validity)
+4. How do we end it safely? (Logout)
+
+
+
+1. Login (Authentication)
+Typical flow
+
+User submits username/email + password
+
+Server:
+
+Hashes the password (bcrypt/argon2)
+
+Compares with stored hash
+
+If valid:
+
+Create a session
+
+Return a session identifier to the browser
+
+2. Session creation (the key step)
+Most common approach (classic & still dominant)
+
+Server-side sessions + cookie
+
+Server creates:
+
+session_id = random, unguessable string
+
+
+Server stores:
+
+session_id → user_id, roles, metadata, expiry
+
+
+Server sends back:
+
+Set-Cookie: session_id=abc123; HttpOnly; Secure; SameSite=Lax
+
+
+The browser automatically includes this cookie on every request.
+
+3. Accessing different pages (Authentication on every request)
+
+For each request:
+
+Browser sends cookies
+
+Server:
+
+Extracts session_id
+
+Looks it up in session store (Redis, memory, DB)
+
+If valid → user is authenticated
+
+If missing/expired → redirect to login (or 401)
+
+Typical middleware pattern
+Request
+  ↓
+Session middleware
+  ↓
+Auth middleware
+  ↓
+Route handler
+
+
+This is how frameworks like Express, Django, Rails, Spring do it.
+
+4. Authorization (not the same as authentication)
+
+Once authenticated:
+
+Server checks permissions/roles
+
+Example:
+
+/admin → requires role = admin
+
+/profile → requires user_id matches
+
+This is usually handled by:
+
+Middleware
+
+Route guards
+
+Annotations/decorators
+
+5. Session expiry
+Two common expiration strategies
+A. Absolute expiration
+
+Session expires after fixed time (e.g. 24 hours)
+
+Even if user is active
+
+B. Sliding expiration (very common)
+
+Session expires after X minutes of inactivity
+
+Each request refreshes expiry
+
+Example:
+
+Expires after 30 minutes idle
+
+Where expiry is enforced
+
+On every request:
+
+Check last_activity
+
+If expired → delete session → force login
+
+6. Logout
+Standard logout flow
+
+Client hits /logout
+
+Server:
+
+Deletes session from store
+
+Server responds with:
+
+Set-Cookie: session_id=; Max-Age=0
+
+
+After that:
+
+Cookie is gone
+
+Session is invalid
+
+User is logged out everywhere (for that session)
+
+7. Session storage (what’s most common)
+Storage	When used
+In-memory	Simple apps, dev only
+Redis	Most common in production
+Database	When persistence/auditing is needed
+Distributed cache	For horizontal scaling
+8. Security best practices (standard today)
+
+Almost always used together:
+
+HttpOnly cookie (prevents JS access)
+
+Secure cookie (HTTPS only)
+
+SameSite=Lax or Strict
+
+Rotate session ID after login
+
+Regenerate session on privilege change
+
+CSRF tokens for state-changing requests
+
+Very common alternative: Token-based (JWT)
+
+Instead of server-side sessions:
+
+Flow
+
+Login → server issues JWT
+
+JWT stored in:
+
+HTTP-only cookie (recommended)
+
+or memory (SPA)
+
+Each request:
+
+Server verifies token signature
+
+No session lookup needed
+
+Tradeoffs
+
+✅ Stateless, scales easily
+❌ Harder to revoke
+❌ Expiry mistakes are common
+❌ More footguns
+
+This is popular for APIs and SPAs, but NOT “more secure” by default.
+
+What’s actually “most common” today?
+
+If you walked into a random production web app:
+
+Server-side sessions + cookies → still #1
+
+Redis-backed session store
+
+Sliding expiration
+
+Middleware-based auth checks
+
+Cookie-based session ID
+
+JWTs are common in mobile apps, SPAs, microservices, but classic sessions dominate web apps.

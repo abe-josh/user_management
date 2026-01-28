@@ -1,1 +1,2 @@
 {"userId":1,"firstName":"test","lastName":"wan","userName":"testwan","email":"testwan@test.com","mobileNumber":9123456789,"dateOfBirth":"2026-01-26","status":"ACTIVE","password":"$2a$12$0QAkz.fLqN.8Yg6tbUGBFOk/fVZRSbcEInfZQ.i1VBL3oB0yCKRLu","createdDate":null,"updatedDate":null},
+{"userId":2,"firstName":"Joshua","lastName":"Abellera","userName":"dev_abe","email":"joshuaabellera23@gmail.com","mobileNumber":9123456789,"dateOfBirth":"2026-01-24","status":"ACTIVE","password":"$2a$12$y.sr5a3cKVdAir1By6fMWejYQ7W7jrxmxzEeOIwl6md8Q.9DN7H/W","createdDate":null,"updatedDate":null},

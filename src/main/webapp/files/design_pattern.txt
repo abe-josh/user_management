@@ -1,0 +1,4 @@
+implement Decorator Pattern for validating user registration
+- check if username exists
+- check if email address exists
+- check if phone number exists
